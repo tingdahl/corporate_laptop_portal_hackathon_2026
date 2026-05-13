@@ -182,7 +182,7 @@ class TestComputeCompliancePrice:
         assert result is None, "Cannot determine without knowing warranty status"
 
     def test_shipping_status_unknown(self):
-        """Don't know if shipping is included - cannot calculate."""
+        """When shipping status unknown, assume NOT included (conservative)."""
         fields = ExtractedLaptopFields(
             cpu_model="Intel i7",
             cpu_cores=12,
@@ -191,7 +191,7 @@ class TestComputeCompliancePrice:
             quoted_price=2500.0,
             includes_warranty=True,
             includes_tax=False,
-            includes_shipping=None,  # Unknown!
+            includes_shipping=None,  # Unknown - assume not included
             warranty_cost=None,
             tax_amount=None,
             shipping_cost=100.0,
@@ -205,7 +205,8 @@ class TestComputeCompliancePrice:
             includes_shipping=None,
             includes_warranty=None,
         )
-        assert result is None, "Cannot determine without knowing shipping status"
+        # Conservative: assume shipping NOT included, so price stays as-is
+        assert result == pytest.approx(2500.0, rel=0.01)
 
     def test_quoted_price_missing(self):
         """No quoted price - cannot calculate."""

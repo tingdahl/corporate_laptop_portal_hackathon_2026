@@ -5,6 +5,12 @@ import type {
   QuoteOverrides,
 } from "./contracts";
 import { getCurrentUser, logout } from "./common";
+import {
+  formatSelectedFileList,
+  isSupportedUpload,
+  mergeUniqueUploads,
+  shouldEnableInterpret,
+} from "./new_quote_helpers";
 
 let selectedFiles: File[] = [];
 let latestInterpretationId = "";
@@ -15,7 +21,7 @@ const MAX_PRICE_USD = 2900;
 function updateSubmitButtonState(): void {
   const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement | null;
   if (submitBtn) {
-    submitBtn.disabled = selectedFiles.length === 0;
+    submitBtn.disabled = !shouldEnableInterpret(selectedFiles.length);
   }
 }
 
@@ -39,25 +45,24 @@ function displaySelectedFiles(): void {
     listContainer.style.display = "block";
   }
 
-  list.innerHTML = selectedFiles
-    .map((file, idx) => `<li key="${idx}">${file.name} (${(file.size / 1024).toFixed(1)} KB)</li>`)
-    .join("");
+  list.innerHTML = formatSelectedFileList(selectedFiles);
 }
 
 function initClipboardPaste(): void {
   window.addEventListener("paste", (event: ClipboardEvent) => {
     const items = event.clipboardData?.items ?? [];
+    const pastedFiles: File[] = [];
     for (const item of items) {
       if (item.type === "image/png" || item.type === "image/jpeg") {
         const file = item.getAsFile();
         if (!file) {
           continue;
         }
-        if (!selectedFiles.find((existing) => existing.name === file.name && existing.size === file.size)) {
-          selectedFiles.push(file);
-        }
+        pastedFiles.push(file);
       }
     }
+
+    selectedFiles = mergeUniqueUploads(selectedFiles, pastedFiles);
 
     if (selectedFiles.length > 0) {
       const status = document.getElementById("status");
@@ -561,15 +566,14 @@ async function main(): Promise<void> {
 
   function handleMultipleFileSelection(files: FileList | null): void {
     if (!files) return;
+    const incoming: File[] = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      if (file && (file.type === "image/png" || file.type === "image/jpeg" || file.type === "application/pdf")) {
-        // Avoid duplicates
-        if (!selectedFiles.find((f) => f.name === file.name && f.size === file.size)) {
-          selectedFiles.push(file);
-        }
+      if (file && isSupportedUpload(file)) {
+        incoming.push(file);
       }
     }
+    selectedFiles = mergeUniqueUploads(selectedFiles, incoming);
     const status = document.getElementById("status");
     if (status) {
       status.textContent = `Selected ${selectedFiles.length} file(s)`;

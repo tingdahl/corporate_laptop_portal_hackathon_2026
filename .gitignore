@@ -16,6 +16,9 @@ venv/
 .coverage.*
 htmlcov/
 coverage.xml
+frontend/coverage/
+test-summary.json
+test-summary.jon
 
 # Build and packaging artifacts
 build/

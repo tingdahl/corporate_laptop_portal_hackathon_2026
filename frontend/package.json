@@ -5,10 +5,15 @@
   "scripts": {
     "build": "node build.mjs",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "dev": "npm run typecheck && npm run build"
+    "dev": "npm run typecheck && npm run build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.6",
     "esbuild": "^0.25.5",
-    "typescript": "^6.0.2"
+    "jsdom": "^29.1.1",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.6"
   }
 }

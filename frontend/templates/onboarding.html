@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staff Portal Onboarding</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.51.0.min.css" />
+    {{styles}}
+    {{script}}
+  </head>
+  <body>
+    <header class="p-strip is-shallow">
+      <div class="row">
+        <div class="col-9 col-medium-4">
+          <h1 class="p-heading--2">Onboarding</h1>
+          <p class="p-heading--5">Signed in as <span id="user-email">-</span></p>
+        </div>
+        <div class="col-3 col-medium-2 u-align--right">
+          <button class="p-button--base" id="logout-btn" type="button">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="p-strip is-default">
+      <div class="row">
+        <div class="col-12">
+          <section class="p-card">
+            <h2 class="p-heading--4">Overview</h2>
+            <p>Eligible employees: <strong id="eligible-count">0</strong></p>
+            <p>Waiting list employees: <strong id="waiting-list-count">0</strong></p>
+            <div class="u-no-margin--bottom">
+              <button class="p-button--positive" id="generate-csv-btn" type="button">Generate CSV</button>
+              <button class="p-button" id="refresh-btn" type="button">Refresh</button>
+            </div>
+            <p class="p-text--small u-no-margin--bottom" id="status"></p>
+          </section>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6 col-medium-3">
+          <section class="p-card">
+            <h2 class="p-heading--5">Eligible Employees</h2>
+            <table class="p-table--mobile-card">
+              <thead>
+                <tr>
+                  <th>E-mail</th>
+                  <th>Start Date (UTC)</th>
+                </tr>
+              </thead>
+              <tbody id="eligible-list">
+                <tr>
+                  <td colspan="2">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+
+        <div class="col-6 col-medium-3">
+          <section class="p-card">
+            <h2 class="p-heading--5">Waiting List</h2>
+            <table class="p-table--mobile-card">
+              <thead>
+                <tr>
+                  <th>E-mail</th>
+                  <th>Date Added To Waitlist (UTC)</th>
+                </tr>
+              </thead>
+              <tbody id="waiting-list">
+                <tr>
+                  <td colspan="2">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <section class="p-card">
+            <h2 class="p-heading--5">Generated CSV Files</h2>
+            <table class="p-table--mobile-card" id="csv-files-table">
+              <thead>
+                <tr>
+                  <th>Filename</th>
+                  <th>Status</th>
+                  <th>Rows</th>
+                  <th>Created (UTC)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="csv-files-body">
+                <tr>
+                  <td colspan="5">Loading...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

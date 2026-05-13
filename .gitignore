@@ -11,6 +11,12 @@ venv/
 .mypy_cache/
 .ruff_cache/
 
+# Test coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
 # Build and packaging artifacts
 build/
 dist/
@@ -21,10 +27,15 @@ pip-wheel-metadata/
 # Frontend dependencies and build outputs
 frontend/node_modules/
 frontend/public/assets/
+frontend/public/index.html
+frontend/public/login.html
+frontend/public/new_quote.html
+frontend/public/onboarding.html
 
 # Backend working directories and uploads
 backend/_work/uploads/
 backend/_work/processed/
+backend/_work/evidence/
 
 # IDE and local settings
 .vscode/

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New Laptop Quote - Staff Portal</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.51.0.min.css" />
+    {{styles}}
+    {{script}}
+  </head>
+  <body>
+    <div id="app">
+      <header class="p-strip is-shallow">
+        <div class="row">
+          <div class="col-9 col-medium-4">
+            <h1 class="p-heading--2">New Laptop Quote</h1>
+            <p class="p-text--small">Upload a shopping cart screenshot (PNG/JPEG) or PDF to interpret and verify your laptop quote.</p>
+          </div>
+          <div class="col-3 col-medium-2 u-align--right">
+            <a href="/" class="p-button--base">Back to Home</a>
+            <button class="p-button--base" id="logout-btn" type="button">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="p-strip is-default">
+        <!-- Inputs Section -->
+        <div class="row">
+          <div class="col-12">
+            <section class="p-card">
+              <h2 class="p-heading--5">Inputs</h2>
+              
+              <div class="p-form__group">
+                <label for="file-input">Image or PDF files (PNG, JPEG, or PDF) - you can select multiple</label>
+                <input id="file-input" type="file" accept="image/png,image/jpeg,application/pdf" multiple />
+              </div>
+
+              <div id="selected-files-list" class="u-sv2" style="display: none;">
+                <p class="p-text--small"><strong>Selected files:</strong></p>
+                <ul id="selected-files" style="margin: 0.5rem 0; padding-left: 1.5rem;"></ul>
+              </div>
+
+              <div id="drop-zone" class="p-form__group" style="border: 2px dashed #d9d9d9; border-radius: 4px; padding: 2rem; text-align: center; background-color: #f8f8f8; cursor: pointer; transition: all 0.2s ease;">
+                <p class="p-text--default" style="margin-bottom: 1rem;">
+                  <strong>Drag and drop files here</strong>
+                </p>
+                <p class="p-text--small" style="color: #666;">or click to select</p>
+              </div>
+
+              <button class="p-button--positive" id="submit-btn" type="button" disabled>Interpret Quote</button>
+              <p class="p-text--small" id="status"></p>
+            </section>
+          </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="row u-hide" id="results-section">
+          <div class="col-12">
+            <section class="p-card">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <h2 class="p-heading--5" style="margin: 0;">Processed Image Preview</h2>
+                <button class="p-button" id="toggle-preview" type="button" style="margin-left: auto; padding: 0.25rem 0.5rem; font-size: 0.9rem; background: none; border: none; cursor: pointer;">↓</button>
+              </div>
+              <div id="preview-content" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Images will be inserted here by JavaScript -->
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Extracted Technical Specifications Section -->
+        <div class="row u-hide" id="analysis-section">
+          <div class="col-12">
+            <section class="p-card">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <h2 class="p-heading--5" style="margin: 0;">Extracted Technical Specifications</h2>
+                <button class="p-button" id="toggle-analysis" type="button" style="margin-left: auto; padding: 0.25rem 0.5rem; font-size: 0.9rem; background: none; border: none; cursor: pointer;">↓</button>
+              </div>
+              <div id="analysis-content">
+                <table class="p-table">
+                  <thead>
+                    <tr>
+                      <th>Property</th>
+                      <th>Value</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>CPU Model</strong></td>
+                      <td id="cpu-model">-</td>
+                      <td id="status-cpu-model">?</td>
+                    </tr>
+                    <tr>
+                      <td><strong>CPU Cores</strong></td>
+                      <td id="cpu-cores">-</td>
+                      <td id="status-cpu-cores">?</td>
+                    </tr>
+                    <tr>
+                      <td><strong>RAM (GB)</strong></td>
+                      <td id="ram-gb">-</td>
+                      <td id="status-ram">?</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Disk (GB)</strong></td>
+                      <td id="disk-gb">-</td>
+                      <td id="status-disk">?</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Finance Section -->
+        <div class="row u-hide" id="finance-section">
+          <div class="col-12">
+            <section class="p-card">
+              <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <h2 class="p-heading--5" style="margin: 0;">Finance</h2>
+                <button class="p-button" id="toggle-finance" type="button" style="margin-left: auto; padding: 0.25rem 0.5rem; font-size: 0.9rem; background: none; border: none; cursor: pointer;">↓</button>
+              </div>
+              <div id="finance-content">
+                <h3 class="p-heading--6" style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Pricing Information</h3>
+                <table class="p-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Detected</th>
+                      <th>Override</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Currency:</strong></td>
+                      <td id="detected-currency">-</td>
+                      <td>
+                        <input type="text" id="override-currency" class="p-form-validation__input" style="width: 5rem;" placeholder="Auto" maxlength="4" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Quoted Price:</strong></td>
+                      <td id="quoted-price">-</td>
+                      <td>
+                        <input type="text" id="override-price" class="p-form-validation__input" style="width: 10rem;" placeholder="Auto" pattern="[0-9.]*" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Includes Tax:</strong></td>
+                      <td id="detected-includes-tax">-</td>
+                      <td>
+                        <select id="override-includes-tax" class="p-form-validation__input" style="width: auto;">
+                          <option value="">Auto</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Includes Shipping:</strong></td>
+                      <td id="detected-includes-shipping">-</td>
+                      <td>
+                        <select id="override-includes-shipping" class="p-form-validation__input" style="width: auto;">
+                          <option value="">Auto</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Includes Minimum 3 Years Warranty:</strong></td>
+                      <td id="detected-includes-warranty">-</td>
+                      <td>
+                        <select id="override-includes-warranty" class="p-form-validation__input" style="width: auto;">
+                          <option value="">Auto</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Exchange Rate:</strong></td>
+                      <td id="exchange-rate" colspan="2">-</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Price (USD):</strong></td>
+                      <td id="price-usd" colspan="2">-</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Compliance Price (USD):</strong></td>
+                      <td id="compliance-price-usd">-</td>
+                      <td id="status-price">?</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p class="p-text--small" style="margin-top: 0.5rem; color: #666;">
+                  <em>Compliance Price = Price WITH warranty, EXCLUDING shipping (used for $2900 threshold check)</em>
+                </p>
+
+                <h3 class="p-heading--6" style="margin-top: 1.5rem; margin-bottom: 0.5rem;">Reimbursement Calculator</h3>
+                <p class="p-notification p-notification--information" style="margin-bottom: 1rem;">
+                  <strong>Note:</strong> This interpretation and the pricing calculator are preliminary. 
+                  The actual purchase is the authoritative record and determines final outcomes.
+                </p>
+                <table class="p-table">
+                  <tbody>
+                    <tr>
+                      <td><strong>Laptop Price (incl. warranty, USD):</strong></td>
+                      <td id="calc-laptop-price">-</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Taxes (USD):</strong></td>
+                      <td id="calc-taxes">-</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Shipping (USD):</strong></td>
+                      <td id="calc-shipping">-</td>
+                    </tr>
+                    <tr class="u-background--light">
+                      <td><strong>Total Purchase (USD):</strong></td>
+                      <td><strong id="calc-total">-</strong></td>
+                    </tr>
+                    <tr class="u-background--light">
+                      <td><strong>Canonical Reimbursement (USD):</strong></td>
+                      <td><strong id="calc-canonical" style="color: green;">-</strong></td>
+                    </tr>
+                    <tr class="u-background--light">
+                      <td><strong>Employee Own Expense (USD):</strong></td>
+                      <td><strong id="calc-employee" style="color: #F47920;">-</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Action Section -->
+        <div class="row u-hide" id="action-section">
+          <div class="col-12">
+            <section class="p-card">
+              <button class="p-button--positive" id="accept-btn" type="button">Accept and Download PDF</button>
+              <p class="p-text--small" id="action-status"></p>
+            </section>
+          </div>
+        </div>
+
+        <!-- Success Section -->
+        <div class="row u-hide" id="success-section">
+          <div class="col-12">
+            <section class="p-card">
+              <div class="p-notification p-notification--positive">
+                <strong>Success!</strong> Your quote has been uploaded to Google Drive.
+              </div>
+              <h3 class="p-heading--5">Evidence File</h3>
+              <p id="success-filename"></p>
+              <a class="p-button--positive" id="drive-link" href="#" target="_blank">View in Google Drive</a>
+              <button class="p-button" id="copy-link-btn" type="button">Copy Link</button>
+              <p class="p-text--small" id="copy-status"></p>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

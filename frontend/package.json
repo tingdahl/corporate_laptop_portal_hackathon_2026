@@ -1,0 +1,14 @@
+{
+  "name": "staff-portal-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "dev": "npm run typecheck && npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.5",
+    "typescript": "^6.0.2"
+  }
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Staff Portal Login</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.51.0.min.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    {{styles}}
+    {{script}}
+  </head>
+  <body>
+    <section class="p-strip is-shallow">
+      <div class="row">
+        <div class="col-8 col-medium-10 col-small-4">
+          <h1 class="p-heading--2">Staff Portal Login</h1>
+          <p class="p-text--default">Sign in with your Google account to continue to Onboarding.</p>
+          <div class="u-no-margin--bottom" id="google-signin"></div>
+          <div class="p-notification p-notification--negative u-hide" id="error" role="alert"></div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -15,7 +15,7 @@ def install_security_headers_middleware(app: FastAPI) -> None:
                 "object-src 'none'",
                 "frame-ancestors 'none'",
                 "script-src 'self' https://accounts.google.com https://*.gstatic.com",
-                "style-src 'self' https://assets.ubuntu.com",
+                "style-src 'self' 'unsafe-inline' https://assets.ubuntu.com",
                 "img-src 'self' data: https://*.gstatic.com",
                 "font-src 'self' https://assets.ubuntu.com",
                 "connect-src 'self' https://accounts.google.com",

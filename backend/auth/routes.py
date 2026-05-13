@@ -8,7 +8,7 @@ from google.auth.transport.requests import Request as GoogleTokenRequest
 from google.oauth2 import id_token
 from itsdangerous import BadSignature, URLSafeSerializer
 
-from contracts import (
+from backend.contracts import (
     AuthCallbackResponse,
     ConfigResponse,
     GoogleAuthRequest,

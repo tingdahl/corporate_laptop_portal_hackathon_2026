@@ -1,0 +1,43 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Python environments and tooling
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# Frontend dependencies and build outputs
+frontend/node_modules/
+frontend/public/assets/
+
+# Backend working directories and uploads
+backend/_work/uploads/
+backend/_work/processed/
+
+# IDE and local settings
+.vscode/
+.idea/
+
+# Environment and local overrides
+.env
+.env.*
+!.env.example
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db

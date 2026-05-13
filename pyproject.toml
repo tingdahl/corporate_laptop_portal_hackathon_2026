@@ -1,0 +1,41 @@
+[project]
+name = "staff-portal"
+version = "2026.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "python-multipart",
+    "requests",
+    "pillow",
+    "google-auth",
+    "google-api-python-client",
+    "google-generativeai",
+    "itsdangerous",
+    "pdf2image",
+    "reportlab",
+    "hvac",
+    "python-dotenv",
+    "simple_salesforce",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "httpx",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "backend"}
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests", "frontend/tests"]
+addopts = "--cov=backend --cov-report=term-missing"
+markers = [
+    "integration: tests that call external services",
+]
